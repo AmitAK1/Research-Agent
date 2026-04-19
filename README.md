@@ -1,6 +1,8 @@
 # Autonomous Research Agent - 
 
-A production-ready, highly autonomous research agent built with **LangGraph**, **Groq** (LLM), **Pinecone** (vector memory), **DuckDuckGo** (search), and **FastAPI** (API deployment).
+A production-ready, highly autonomous research agent built with **LangGraph**, **Groq** (LLM), **Pinecone** (vector memory), **DuckDuckGo** (search), and **Streamlit** (UI deployment).
+
+🚀 **Live Demo:** [https://research-agent-lumiq-ai.streamlit.app/](https://research-agent-lumiq-ai.streamlit.app/)
 
 ## Problem Statement
 
@@ -109,13 +111,12 @@ LumiqAI/
 }
 ```
 
-## Deployment (Render)
+## Deployment (Streamlit)
 
 1. Push to GitHub
-2. Connect repo on [render.com](https://render.com)
-3. Set environment variables: `GROQ_API_KEY`, `PINECONE_API_KEY`, `PINECONE_INDEX_NAME`
-4. Build command: `pip install -r requirements.txt`
-5. Start command: `uvicorn src.api:app --host 0.0.0.0 --port $PORT`
+2. Connect repo on [Streamlit Community Cloud](https://share.streamlit.io/)
+3. Set environment variables in the Streamlit secrets manager: `GROQ_API_KEY`, `PINECONE_API_KEY`, `PINECONE_INDEX_NAME`
+4. Deploy the `app.py` or equivalent Streamlit entry point.
 
 ## Limitations & Future Work
 
