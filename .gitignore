@@ -1,0 +1,7 @@
+.env
+agents/
+.venv/
+__pycache__/
+*.pyc
+Archive/
+.ipynb_checkpoints/
