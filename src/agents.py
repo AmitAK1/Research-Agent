@@ -112,9 +112,10 @@ def research_fn(state: AgentState) -> dict:
 
     # Fallback: if planner didn't tag tools, ask the LLM
     if not needs_search and not needs_calc and "[TOOL:" not in plan.upper():
-        decision_prompt = f"""Does this query require: (a) web search for current data, AND/OR (b) mathematical calculations?
-Query: '{query}'
-Answer ONLY with one of: SEARCH_ONLY, CALC_ONLY, BOTH, NEITHER"""
+        decision_prompt = f"""Analyze this query: '{query}'
+Does this query explicitly require mathematical calculations, formulas, statistics computation, or quantitative data processing?
+Answer ONLY with one of: SEARCH_ONLY, CALC_ONLY, BOTH, NEITHER.
+Note: Choose 'SEARCH_ONLY' unless explicit math/computations are needed. General questions (like "how to improve yourself") are SEARCH_ONLY or NEITHER."""
         decision = safe_invoke(decision_prompt).content.strip().upper()
         needs_search = "SEARCH" in decision or "BOTH" in decision
         needs_calc = "CALC" in decision or "BOTH" in decision
@@ -179,12 +180,11 @@ RAW RESEARCH DATA (extract values directly from this text):
 {data_for_calc}
 
 STRICT RULES (Read carefully):
-1. Extract the exact numerical values needed for the calculation from the RAW RESEARCH DATA above using python (regex or simple parsing if helpful, or just assign them to variables directly based on your reading).
-2. If exact historical data (e.g., 2020) is missing but recent trend data (e.g., 2022, 2023, 2024) is available, DO NOT crash. Instead, ESTIMATE it using linear extrapolation backwards. Print "ESTIMATED (extrapolated from recent trend):" before using the value.
-3. If estimation is completely impossible and no trend exists, print exactly "CALCULATION_FAILED: Insufficient data to calculate" and call sys.exit(0).
-4. NEVER set an initial/start value to 0 for CAGR — always use a real estimate > 0.
-5. If you can compute for a shorter available range (e.g., 2022-2025 instead of 2020-2025), DO THAT and clearly print: "Note: CAGR computed for [year]-[year] due to data availability".
-6. Always print EVERY intermediate step and the final result clearly labeled.
+1. Extract the exact numerical values needed for the calculation from the RAW RESEARCH DATA above using python.
+2. If the user query does not explicitly require math, trend calculation, or data extraction, just print "No calculation needed for qualitative queries." and call sys.exit(0).
+3. If calculation is strictly impossible due to missing numbers, print exactly "CALCULATION_FAILED: Insufficient data to calculate" and call sys.exit(0).
+4. Do NOT crash on zero values if calculating percentage differences/growth, handle gracefully or estimate.
+5. Always print EVERY intermediate step and the final result clearly labeled.
 
 Output ONLY Python code, no markdown fences, no explanation outside of code comments. Ensure 'import sys' is included if using sys.exit(0)."""
         code = safe_invoke(code_prompt).content.strip()
