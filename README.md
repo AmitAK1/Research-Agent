@@ -1,7 +1,5 @@
 # Autonomous Research Agent - 
 
-Built by **Amit**, Pre-final Year CSE (AI Major) at IIITDM Kancheepuram.
-
 A production-ready, highly autonomous research agent built with **LangGraph**, **Groq** (LLM), **Pinecone** (vector memory), **DuckDuckGo** (search), and **FastAPI** (API deployment).
 
 ## Problem Statement
