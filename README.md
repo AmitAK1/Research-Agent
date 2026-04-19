@@ -1,4 +1,4 @@
-# Autonomous Research Agent - Lumiq.ai Assignment (Option A)
+# Autonomous Research Agent - 
 
 Built by **Amit**, Pre-final Year CSE (AI Major) at IIITDM Kancheepuram.
 
